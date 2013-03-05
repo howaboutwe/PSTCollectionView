@@ -66,6 +66,7 @@ typedef NS_OPTIONS(NSUInteger, PSTCollectionViewScrollPosition) {
 - (void)reloadData; // discard the dataSource and delegate data and requery as necessary
 
 - (void)setCollectionViewLayout:(PSTCollectionViewLayout *)layout animated:(BOOL)animated; // transition from one layout to another
+- (void)invalidateLayoutAnimated:(BOOL)animated;
 
 // Information about the current state of the collection view.
 

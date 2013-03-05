@@ -284,6 +284,12 @@ static void PSTCollectionViewCommonSetup(PSTCollectionView *_self) {
     }
 }
 
+- (void)invalidateLayoutAnimated:(BOOL)animated {
+    [self invalidateLayout];
+    if (animated)
+        _collectionViewFlags.fadeCellsForBoundsChange = YES;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - UIScrollViewDelegate
 

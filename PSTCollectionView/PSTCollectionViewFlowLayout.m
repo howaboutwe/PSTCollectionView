@@ -113,6 +113,19 @@ NSString *const PSTFlowLayoutRowVerticalAlignmentKey = @"UIFlowLayoutRowVertical
     return self;
 }
 
+- (void)encodeWithCoder:(NSCoder *)coder
+{
+    [super encodeWithCoder:coder];
+
+    [coder encodeCGSize:self.itemSize forKey:@"UIItemSize"];
+    [coder encodeFloat:self.minimumInteritemSpacing forKey:@"UIInteritemSpacing"];
+    [coder encodeFloat:self.minimumLineSpacing forKey:@"UILineSpacing"];
+    [coder encodeCGSize:self.footerReferenceSize forKey:@"UIFooterReferenceSize"];
+    [coder encodeCGSize:self.headerReferenceSize forKey:@"UIHeaderReferenceSize"];
+    [coder encodeUIEdgeInsets:self.sectionInset forKey:@"UISectionInset"];
+    [coder encodeInteger:self.scrollDirection forKey:@"UIScrollDirection"];
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark - PSTCollectionViewLayout
 
@@ -216,29 +229,29 @@ static char kPSTCachedItemRectsKey;
     NSUInteger sectionIndex = indexPath.section;
 
     PSTCollectionViewLayoutAttributes *layoutAttributes = nil;
-    
+
     if (sectionIndex < _data.sections.count) {
         PSTGridLayoutSection *section = _data.sections[sectionIndex];
-        
+
         CGRect normilazedFrame = CGRectZero;
-        
+
         if ([kind isEqualToString:PSTCollectionElementKindSectionHeader]) {
             normilazedFrame = section.headerFrame;
         }
         else if ([kind isEqualToString:PSTCollectionElementKindSectionFooter]) {
             normilazedFrame = section.footerFrame;
         }
-        
+
         if (!CGRectIsEmpty(normilazedFrame)) {
             normilazedFrame.origin.x += section.frame.origin.x;
             normilazedFrame.origin.y += section.frame.origin.y;
-            
+
             layoutAttributes = [[[self class] layoutAttributesClass] layoutAttributesForSupplementaryViewOfKind:kind withIndexPath:[NSIndexPath indexPathForItem:0 inSection:sectionIndex]];
             layoutAttributes.frame = normilazedFrame;
-            
+
         }
-        
-        
+
+
     }
 
     return layoutAttributes;
